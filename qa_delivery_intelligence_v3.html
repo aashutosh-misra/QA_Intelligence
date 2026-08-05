@@ -83,6 +83,9 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .ti-urgent:before{content:"\f071"}
 .ti-user-plus:before{content:"\f234"}
 .ti-arrow-right:before{content:"\f061"}
+.ti-arrow-left:before{content:"\f060"}
+.ti-chevron-left:before{content:"\f053"}
+.ti-chevron-right:before{content:"\f054"}
 .ti-alert-circle:before{content:"\f06a"}
 .ti-clock:before{content:"\f017"}
 .ti-keyboard:before{content:"\f11c"}
@@ -497,6 +500,81 @@ textarea{resize:vertical;min-height:70px}
   justify-content: center;
   backdrop-filter: blur(4px);
 }
+
+/* ══ EXECUTION POPUP NAVIGATION AND MOTIONS ══ */
+.modal-nav-btn {
+  background: var(--bg2);
+  border: 1px solid var(--border2);
+  color: var(--text);
+  border-radius: 50%;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  cursor: pointer;
+  box-shadow: var(--shm);
+  transition: all 0.2s ease;
+  z-index: 510;
+  outline: none;
+}
+.modal-nav-btn:hover:not(:disabled) {
+  background: var(--green);
+  color: #fff;
+  border-color: var(--green);
+  transform: scale(1.1);
+}
+.modal-nav-btn:active:not(:disabled) {
+  transform: scale(0.95);
+}
+.modal-nav-btn:disabled {
+  opacity: 0.25;
+  cursor: not-allowed;
+  border-color: var(--border);
+}
+
+@keyframes slideOutLeft {
+  from { transform: translateX(0); opacity: 1; }
+  to { transform: translateX(-40px); opacity: 0; }
+}
+@keyframes slideInRight {
+  from { transform: translateX(40px); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}
+@keyframes slideOutRight {
+  from { transform: translateX(0); opacity: 1; }
+  to { transform: translateX(40px); opacity: 0; }
+}
+@keyframes slideInLeft {
+  from { transform: translateX(-40px); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}
+
+.slide-out-left { animation: slideOutLeft 0.18s forwards cubic-bezier(0.4, 0, 1, 1); }
+.slide-in-right { animation: slideInRight 0.22s forwards cubic-bezier(0, 0, 0.2, 1); }
+.slide-out-right { animation: slideOutRight 0.18s forwards cubic-bezier(0.4, 0, 1, 1); }
+.slide-in-left { animation: slideInLeft 0.22s forwards cubic-bezier(0, 0, 0.2, 1); }
+
+@keyframes shakeModal {
+  0%, 100% { transform: translateX(0); }
+  15%, 45%, 75% { transform: translateX(-8px); }
+  30%, 60%, 90% { transform: translateX(8px); }
+}
+.shake-fail {
+  animation: shakeModal 0.45s ease-in-out;
+  border: 2px solid var(--red) !important;
+}
+
+@keyframes passSuccess {
+  0% { transform: scale(1); box-shadow: 0 0 0 rgba(29, 158, 117, 0); }
+  50% { transform: scale(1.025); box-shadow: 0 0 25px rgba(29, 158, 117, 0.5); }
+  100% { transform: scale(1); box-shadow: 0 0 0 rgba(29, 158, 117, 0); }
+}
+.pass-success {
+  animation: passSuccess 0.45s ease-in-out;
+  border: 2px solid var(--green) !important;
+}
 </style>
 </head>
 <body>
@@ -727,8 +805,12 @@ textarea{resize:vertical;min-height:70px}
 </div>
 
 <!-- ══ MODAL: EXECUTE TEST CASE ══ -->
-<div class="modal-ov" id="modalExec">
-<div class="modal" style="width:520px">
+<div class="modal-ov" id="modalExec" style="gap:20px;">
+  <button class="modal-nav-btn" id="exec-prev-btn" onclick="execNav('prev')" title="Previous Test Case (ArrowLeft)">
+    <i class="ti ti-chevron-left"></i>
+  </button>
+
+  <div class="modal" style="width:520px; position:relative;">
   <div class="modal-hd">
     <span style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
       <span class="modal-title">Update Execution Status</span>
@@ -739,10 +821,10 @@ textarea{resize:vertical;min-height:70px}
   <div class="modal-body">
     <div style="margin-bottom:12px;padding:10px;background:var(--bg3);border-radius:var(--rs);font-size:12px;color:var(--text2)">Updating: <strong id="exec-tc-name"></strong></div>
     <div class="quick-exec-row">
-      <button class="btn quick-exec-btn" style="background:#e8f7f1;color:#0d6e50;border:1px solid #1D9E75" onclick="quickExecAction('Pass')"><i class="ti ti-check"></i> Pass <span style="opacity:.55;font-weight:400">(P)</span></button>
-      <button class="btn quick-exec-btn" style="background:#fcebeb;color:#a32d2d;border:1px solid #E24B4A" onclick="quickExecAction('Fail')"><i class="ti ti-x"></i> Fail <span style="opacity:.55;font-weight:400">(F)</span></button>
-      <button class="btn quick-exec-btn" style="background:#fef3e2;color:#854F0B;border:1px solid #EF9F27" onclick="quickExecAction('Hold')"><i class="ti ti-player-pause"></i> Hold <span style="opacity:.55;font-weight:400">(H)</span></button>
-      <button class="btn quick-exec-btn" style="background:#f3e8ff;color:#6b21a8;border:1px solid #a78bfa" onclick="quickExecAction('Skipped')"><i class="ti ti-arrow-bar-right"></i> Skip <span style="opacity:.55;font-weight:400">(S)</span></button>
+      <button class="btn quick-exec-btn" style="background:#e8f7f1;color:#0d6e50;border:1px solid #1D9E75" onclick="quickExecAction('Pass', event)"><i class="ti ti-check"></i> Pass <span style="opacity:.55;font-weight:400">(P)</span></button>
+      <button class="btn quick-exec-btn" style="background:#fcebeb;color:#a32d2d;border:1px solid #E24B4A" onclick="quickExecAction('Fail', event)"><i class="ti ti-x"></i> Fail <span style="opacity:.55;font-weight:400">(F)</span></button>
+      <button class="btn quick-exec-btn" style="background:#fef3e2;color:#854F0B;border:1px solid #EF9F27" onclick="quickExecAction('Hold', event)"><i class="ti ti-player-pause"></i> Hold <span style="opacity:.55;font-weight:400">(H)</span></button>
+      <button class="btn quick-exec-btn" style="background:#f3e8ff;color:#6b21a8;border:1px solid #a78bfa" onclick="quickExecAction('Skipped', event)"><i class="ti ti-arrow-bar-right"></i> Skip <span style="opacity:.55;font-weight:400">(S)</span></button>
     </div>
     <div style="font-size:10.5px;color:var(--text3);text-align:center;margin:8px 0 4px">Quick actions save instantly and auto-open the next test case. Keyboard: P / F / H / S.</div>
     <div class="fg2" style="gap:10px;margin-top:10px">
@@ -769,6 +851,10 @@ textarea{resize:vertical;min-height:70px}
     <button class="btn btn-primary" onclick="saveExec()"><i class="ti ti-player-play"></i> Update Status</button>
   </div>
 </div>
+
+  <button class="modal-nav-btn" id="exec-next-btn" onclick="execNav('next')" title="Next Test Case (ArrowRight)">
+    <i class="ti ti-chevron-right"></i>
+  </button>
 </div>
 
 <!-- ══ MODAL: ADD/EDIT PROJECT ══ -->
@@ -1715,6 +1801,7 @@ let globalQuickFilter="";
 let editTCIdx=-1, editTPIdx=-1, editTaskIdx=-1, editModIdx=-1, editProjIdx=-1, editUserIdx=-1, editDefectIdx=-1, editReqIdx=-1, editTemplateIdx=-1;
 let execTCId=null;
 let execQueue=[], execQueuePos=-1, execQueueActive=false;
+let particlesTriggered=false;
 let importParsedRows=[];
 let selectedTCIds=new Set();
 let selectedTPTCIds=new Set();
@@ -4100,6 +4187,26 @@ function deleteTC(id){
 function openExecModal(tcId){
   execTCId=tcId;
   const tc=TEST_CASES.find(t=>t.id===tcId);if(!tc)return;
+
+  // Dynamically initialize the execution queue if not active or if tc is missing from queue
+  if (!execQueueActive || !execQueue.includes(tcId)) {
+    const planF=($("exec-filter-plan")||{value:""}).value;
+    const modF=($("exec-filter-module")||{value:""}).value;
+    const stF=($("exec-filter-status")||{value:""}).value;
+    let list=accessibleTestCases();
+    if(planF){const plan=TEST_PLANS.find(p=>p.id===planF);list=plan?list.filter(t=>plan.tcIds.includes(t.id)):[];}
+    if(modF)list=list.filter(t=>t.moduleId===modF);
+    if(stF)list=list.filter(t=>t.status===stF);
+
+    // Fallback
+    if(!list.some(t=>t.id===tcId)){
+      list=accessibleTestCases();
+    }
+
+    execQueue=list.map(t=>t.id);
+    execQueuePos=execQueue.indexOf(tcId);
+  }
+
   $("exec-tc-name").textContent=tc.title;
   $("exec-status").value=tc.status||"Not Executed";
   $("exec-actual").value=tc.actual||"";
@@ -4107,20 +4214,210 @@ function openExecModal(tcId){
   $("exec-comments").value="";
   const byS=$("exec-by");
   byS.innerHTML='<option value="">Select tester</option>'+activeUserNames().map(t=>`<option value="${t}" ${t===tc.assignee?"selected":""}>${t}</option>`).join("");
+
   const prog=$("exec-queue-progress");
   const exitBtn=$("exec-exit-queue-btn");
-  if(execQueueActive){
+  if(execQueue.length>1){
     if(prog){prog.style.display="";prog.textContent=`Test ${execQueuePos+1} of ${execQueue.length}`;}
-    if(exitBtn)exitBtn.style.display="";
+    if(exitBtn&&execQueueActive)exitBtn.style.display="";
   }else{
     if(prog)prog.style.display="none";
     if(exitBtn)exitBtn.style.display="none";
   }
+
+  // Update navigation buttons enabled/disabled states
+  const prevBtn=$("exec-prev-btn");
+  const nextBtn=$("exec-next-btn");
+  if(prevBtn) prevBtn.disabled=(execQueuePos<=0);
+  if(nextBtn) nextBtn.disabled=(execQueuePos===-1||execQueuePos>=execQueue.length-1);
+
   openModal("modalExec");
 }
+
+function saveCurrentExecState(){
+  const tc=TEST_CASES.find(t=>t.id===execTCId);
+  if(!tc)return;
+  const newStatus=$("exec-status").value;
+  if(tc.status!==newStatus){
+    logTCActivity(tc,`Status changed: ${tc.status} → ${newStatus}`);
+    tc.status=newStatus;
+  }
+  tc.actual=$("exec-actual").value||"";
+  tc.defect=$("exec-defect").value||"";
+
+  const byS=$("exec-by").value;
+  if(byS){
+    tc.assignee=byS;
+  }
+
+  const comment=$("exec-comments").value.trim();
+  if(comment){
+    logTCActivity(tc,`Comment: ${comment}`);
+    $("exec-comments").value="";
+  }
+
+  saveState();
+  renderAll();
+}
+
+function execNav(direction){
+  if(execQueuePos===-1||execQueue.length===0)return;
+
+  // Save current testcase state before navigating
+  saveCurrentExecState();
+
+  if(direction==='prev'){
+    if(execQueuePos>0){
+      execQueuePos--;
+      transitionExecModal(execQueue[execQueuePos], "prev");
+    }
+  }else if(direction==='next'){
+    if(execQueuePos<execQueue.length-1){
+      execQueuePos++;
+      transitionExecModal(execQueue[execQueuePos], "next");
+    }
+  }
+}
+
+function transitionExecModal(tcId, direction){
+  const modalEl=document.querySelector("#modalExec .modal");
+  if(!modalEl){
+    openExecModal(tcId);
+    return;
+  }
+
+  // Apply sliding-out exit transition based on navigation direction
+  const outClass = direction === "next" ? "slide-out-left" : "slide-out-right";
+  modalEl.classList.remove("slide-in-left", "slide-in-right", "slide-out-left", "slide-out-right", "shake-fail", "pass-success");
+  modalEl.classList.add(outClass);
+
+  setTimeout(()=>{
+    // Update data without flickering/reopening modal background
+    execTCId=tcId;
+    const tc=TEST_CASES.find(t=>t.id===tcId);
+    if(tc){
+      $("exec-tc-name").textContent=tc.title;
+      $("exec-status").value=tc.status||"Not Executed";
+      $("exec-actual").value=tc.actual||"";
+      $("exec-defect").value=tc.defect||"";
+      $("exec-comments").value="";
+      const byS=$("exec-by");
+      byS.innerHTML='<option value="">Select tester</option>'+activeUserNames().map(t=>`<option value="${t}" ${t===tc.assignee?"selected":""}>${t}</option>`).join("");
+
+      const prog=$("exec-queue-progress");
+      const exitBtn=$("exec-exit-queue-btn");
+      if(execQueue.length>1){
+        if(prog){prog.style.display="";prog.textContent=`Test ${execQueuePos+1} of ${execQueue.length}`;}
+        if(exitBtn&&execQueueActive)exitBtn.style.display="";
+      }else{
+        if(prog)prog.style.display="none";
+        if(exitBtn)exitBtn.style.display="none";
+      }
+
+      const prevBtn=$("exec-prev-btn");
+      const nextBtn=$("exec-next-btn");
+      if(prevBtn) prevBtn.disabled=(execQueuePos<=0);
+      if(nextBtn) nextBtn.disabled=(execQueuePos===-1||execQueuePos>=execQueue.length-1);
+    }
+
+    // Apply sliding-in entry transition
+    const inClass = direction === "next" ? "slide-in-right" : "slide-in-left";
+    modalEl.classList.remove(outClass);
+    modalEl.classList.add(inClass);
+
+    setTimeout(()=>{
+      modalEl.classList.remove(inClass);
+    }, 250);
+  }, 180);
+}
+
+function triggerParticles(type, event) {
+  let x, y;
+  if (event && event.clientX && event.clientY) {
+    x = event.clientX;
+    y = event.clientY;
+  } else {
+    // If no coordinates provided, target the center of the active modal
+    const modalEl = document.querySelector("#modalExec .modal");
+    if (modalEl) {
+      const rect = modalEl.getBoundingClientRect();
+      x = rect.left + rect.width / 2;
+      y = rect.top + rect.height / 2;
+    } else {
+      x = window.innerWidth / 2;
+      y = window.innerHeight / 2;
+    }
+  }
+
+  const colors = type === "Pass" ? ["#1D9E75", "#0d6e50", "#a7f3d0", "#10b981", "#34d399", "#fbbf24"] : ["#E24B4A", "#a32d2d", "#fca5a5", "#ef4444", "#f87171", "#7f1d1d"];
+
+  // Apply failure shaking or success scaling to the modal
+  const modalEl = document.querySelector("#modalExec .modal");
+  if (modalEl) {
+    modalEl.classList.remove("shake-fail", "pass-success");
+    void modalEl.offsetWidth; // force browser layout reflow to restart animation
+    if (type === "Fail") {
+      modalEl.classList.add("shake-fail");
+    } else if (type === "Pass") {
+      modalEl.classList.add("pass-success");
+    }
+  }
+
+  // Create absolute particles overlay
+  const container = document.createElement("div");
+  container.className = "particle-overlay-container";
+  container.style.position = "fixed";
+  container.style.left = "0";
+  container.style.top = "0";
+  container.style.width = "100vw";
+  container.style.height = "100vh";
+  container.style.pointerEvents = "none";
+  container.style.zIndex = "9999";
+  document.body.appendChild(container);
+
+  const particleCount = 45;
+  for (let i = 0; i < particleCount; i++) {
+    const p = document.createElement("div");
+    p.style.position = "absolute";
+    p.style.left = `${x}px`;
+    p.style.top = `${y}px`;
+    p.style.width = `${Math.random() * 8 + 6}px`;
+    p.style.height = `${Math.random() * 8 + 6}px`;
+    p.style.borderRadius = Math.random() > 0.35 ? "50%" : "3px"; // mix of circles and confetti squares
+    p.style.background = colors[Math.floor(Math.random() * colors.length)];
+
+    const angle = Math.random() * Math.PI * 2;
+    const velocity = Math.random() * 150 + 60; // speed
+    const dx = Math.cos(angle) * velocity;
+    const dy = Math.sin(angle) * velocity;
+
+    container.appendChild(p);
+
+    p.animate([
+      { transform: "translate(0, 0) scale(1)", opacity: 1 },
+      { transform: `translate(${dx}px, ${dy + 60}px) scale(0)`, opacity: 0 }
+    ], {
+      duration: Math.random() * 700 + 400,
+      easing: "cubic-bezier(0.1, 0.8, 0.3, 1)",
+      fill: "forwards"
+    });
+  }
+
+  // Auto clean up particles container from memory after animation finishes
+  setTimeout(() => {
+    container.remove();
+  }, 1200);
+}
+
 function saveExec(){
   const tc=TEST_CASES.find(t=>t.id===execTCId);if(!tc){closeModal("modalExec");return;}
   const newStatus=$("exec-status").value;
+
+  if ((newStatus === "Pass" || newStatus === "Fail") && !particlesTriggered) {
+    triggerParticles(newStatus);
+  }
+  particlesTriggered = false; // reset
+
   if(tc.status!==newStatus)logTCActivity(tc,`Status changed: ${tc.status} → ${newStatus}`);
   tc.status=newStatus;
   tc.actual=$("exec-actual").value||"";
@@ -4468,6 +4765,8 @@ document.addEventListener("keydown",e=>{
     else if(k==="f")quickExecAction("Fail");
     else if(k==="h")quickExecAction("Hold");
     else if(k==="s")quickExecAction("Skipped");
+    else if(e.key==="ArrowLeft")execNav("prev");
+    else if(e.key==="ArrowRight")execNav("next");
   }
 });
 
