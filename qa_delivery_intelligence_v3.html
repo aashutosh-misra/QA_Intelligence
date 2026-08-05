@@ -267,9 +267,310 @@ textarea{resize:vertical;min-height:70px}
 @media (max-width:460px){
   #tc-kpis,#exec-kpis,#kpi1,#kpi2,#proj-kpis,#user-kpis,#task-kpis,#tp-kpis,#risk-kpis,#def-kpis,#portfolio-kpis,#rtm-kpis,#exec-insight-kpis-1,#exec-insight-kpis-2,#admin-system-kpis{grid-template-columns:1fr!important}
 }
+
+/* ══ PREMIUM LOGIN & SSO MODULE ══ */
+.login-screen {
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(circle at top right, var(--bg3), var(--bg));
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  overflow-y: auto;
+}
+.login-card {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  box-shadow: var(--shm);
+  width: 100%;
+  max-width: 440px;
+  padding: 32px;
+  position: relative;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+.login-header {
+  text-align: center;
+  margin-bottom: 24px;
+}
+.login-logo {
+  width: 48px;
+  height: 48px;
+  background: linear-gradient(135deg, var(--green), var(--gt));
+  border-radius: 12px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 12px;
+}
+.login-logo i {
+  color: #fff;
+  font-size: 24px;
+}
+.login-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--text);
+  letter-spacing: -0.4px;
+}
+.login-subtitle {
+  font-size: 12px;
+  color: var(--text3);
+  margin-top: 4px;
+}
+.login-separator {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  color: var(--text3);
+  font-size: 11px;
+  margin: 18px 0;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+.login-separator::before, .login-separator::after {
+  content: '';
+  flex: 1;
+  border-bottom: 1px solid var(--border);
+}
+.login-separator:not(:empty)::before {
+  margin-right: .5em;
+}
+.login-separator:not(:empty)::after {
+  margin-left: .5em;
+}
+.btn-sso {
+  width: 100%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 10px 16px;
+  border-radius: var(--rs);
+  font-size: 12.5px;
+  font-weight: 600;
+  cursor: pointer;
+  background: #2f2f2f;
+  color: #fff;
+  border: 1px solid #2f2f2f;
+  transition: all 0.15s;
+}
+.btn-sso:hover {
+  background: #1a1a1a;
+  border-color: #1a1a1a;
+}
+.btn-sso i {
+  font-size: 16px;
+}
+
+/* ══ HIGH FIDELITY COMPONENT STATES ══ */
+.state-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 40px 24px;
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  box-shadow: var(--sh);
+  margin-bottom: 14px;
+  min-height: 220px;
+}
+.state-icon {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: var(--bg3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 14px;
+}
+.state-icon i {
+  font-size: 24px;
+  color: var(--text2);
+}
+.state-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 6px;
+}
+.state-desc {
+  font-size: 11.5px;
+  color: var(--text2);
+  max-width: 340px;
+  line-height: 1.5;
+  margin-bottom: 14px;
+}
+
+/* Empty State theme variants */
+.state-empty .state-icon i { color: var(--text3); }
+
+/* Loading State */
+.state-loading .state-icon {
+  background: transparent;
+}
+.state-loading .state-icon-spinner {
+  width: 32px;
+  height: 32px;
+  border: 3px solid var(--border2);
+  border-top-color: var(--green);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+/* Error State */
+.state-error .state-icon { background: var(--rb); }
+.state-error .state-icon i { color: var(--red); }
+
+/* No Results State */
+.state-no-results .state-icon { background: var(--ab); }
+.state-no-results .state-icon i { color: var(--amber); }
+
+/* Permission Denied */
+.state-denied .state-icon { background: var(--rb); }
+.state-denied .state-icon i { color: var(--red); }
+
+/* Slow Connection / Offline Premium Alert Banner */
+.network-indicator-bar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 8px 16px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #fff;
+  transition: all 0.3s ease;
+  z-index: 1001;
+}
+.network-offline {
+  background: var(--red);
+}
+.network-slow {
+  background: var(--amber);
+}
+
+/* Eye Toggle password */
+.password-input-wrap {
+  position: relative;
+}
+.password-toggle-btn {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--text2);
+  padding: 4px;
+}
+
+/* Input Success State highlight */
+.input-success {
+  border-color: var(--green) !important;
+  box-shadow: 0 0 0 3px rgba(29, 158, 117, 0.15) !important;
+}
+.validation-success-text {
+  font-size: 11px;
+  color: var(--gt);
+  margin-top: 3px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+/* Session Expiry Modal */
+.session-expiry-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.7);
+  z-index: 10000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(4px);
+}
 </style>
 </head>
 <body>
+<!-- ══ SLOW NETWORK / OFFLINE ALERTS ══ -->
+<div id="network-indicator" class="network-indicator-bar" style="display: none;"></div>
+
+<!-- ══ FULL-SCREEN LOGIN & SSO VIEW ══ -->
+<div id="login-container" class="login-screen" style="display: none;">
+  <div class="login-card">
+    <div class="login-header">
+      <div class="login-logo"><i class="ti ti-chart-dots"></i></div>
+      <h1 class="login-title">QA Delivery Intelligence</h1>
+      <p class="login-subtitle">Program Test & Quality Management Suite</p>
+    </div>
+
+    <div id="login-alert" style="display: none; padding: 10px; border-radius: var(--rs); font-size: 11.5px; margin-bottom: 16px;"></div>
+
+    <!-- SSO Section -->
+    <div id="sso-section">
+      <button class="btn-sso" onclick="handleSSOLogin()">
+        <i class="fab fa-microsoft"></i> Sign in with Microsoft SSO
+      </button>
+      <div class="login-separator">or sign in with password</div>
+    </div>
+
+    <!-- Standard Credentials form -->
+    <form id="standard-login-form" onsubmit="handleStandardLogin(event)">
+      <div class="fg" style="margin-bottom: 12px;">
+        <label for="login-username">Username or Email *</label>
+        <input type="text" id="login-username" placeholder="name@company.com or username" oninput="clearFieldError('login-username')" required>
+      </div>
+
+      <div class="fg" style="margin-bottom: 16px;">
+        <label for="login-password">Password *</label>
+        <div class="password-input-wrap">
+          <input type="password" id="login-password" placeholder="••••••••" oninput="clearFieldError('login-password')" required>
+          <button type="button" class="password-toggle-btn" onclick="togglePasswordVisibility('login-password')">
+            <i id="toggle-icon-login-password" class="fa-solid fa-eye" style="font-size:14px;"></i>
+          </button>
+        </div>
+      </div>
+
+      <button type="submit" class="btn btn-primary" style="width: 100%; justify-content: center; padding: 10px 16px; font-weight: 600; font-size: 12.5px;">
+        Sign In <i class="ti ti-arrow-right" style="margin-left: 4px;"></i>
+      </button>
+    </form>
+
+    <div style="text-align: center; margin-top: 18px; font-size: 11px; color: var(--text3)">
+      Demo Accounts: <strong>ashutosh@company.com</strong> / <strong>password</strong>
+    </div>
+  </div>
+</div>
+
+<!-- ══ SESSION EXPIRED OVERLAY ══ -->
+<div id="session-expired-overlay" class="session-expiry-overlay" style="display: none;">
+  <div class="login-card" style="max-width: 380px;">
+    <div class="login-header">
+      <div class="login-logo" style="background: var(--rb);"><i class="ti ti-alert-triangle" style="color: var(--red);"></i></div>
+      <h1 class="login-title">Session Expired</h1>
+      <p class="login-subtitle">Please re-authenticate to restore your secure session</p>
+    </div>
+
+    <form onsubmit="handleSessionReauth(event)">
+      <div class="fg" style="margin-bottom: 16px;">
+        <label>Password for <strong id="reauth-username-label"></strong></label>
+        <input type="password" id="reauth-password" placeholder="••••••••" required>
+      </div>
+      <button type="submit" class="btn btn-primary" style="width: 100%; justify-content: center; padding: 8px 16px;">
+        Unlock Session
+      </button>
+    </form>
+  </div>
+</div>
+
 <div class="toast" id="toast"><span id="toast-msg"></span></div>
 <div class="sidebar-scrim" id="sidebarScrim" onclick="toggleSidebar(false)"></div>
 
@@ -622,12 +923,54 @@ textarea{resize:vertical;min-height:70px}
         <div id="profile-meta" style="font-size:11.5px;color:var(--text3)"></div>
       </div>
     </div>
+
+    <!-- Personal & Login Details -->
+    <div style="font-size:10.5px;color:var(--text3);font-weight:700;text-transform:uppercase;margin:15px 0 9px"><i class="ti ti-user"></i> Personal & Login Information</div>
+    <div class="fg2" style="gap:10px; margin-bottom: 14px;">
+      <div class="fg"><label>Full Name *</label><input id="pf-edit-name" oninput="clearFieldError('pf-edit-name')" placeholder="Your full name"></div>
+      <div class="fg"><label>Email *</label><input id="pf-edit-email" oninput="clearFieldError('pf-edit-email')" placeholder="name@company.com"></div>
+      <div class="fg"><label>Username *</label><input id="pf-edit-username" oninput="clearFieldError('pf-edit-username')" placeholder="username"></div>
+      <div class="fg">
+        <label>Password *</label>
+        <div class="password-input-wrap">
+          <input type="password" id="pf-edit-password" placeholder="••••••••" oninput="clearFieldError('pf-edit-password')">
+          <button type="button" class="password-toggle-btn" onclick="togglePasswordVisibility('pf-edit-password')">
+            <i id="toggle-icon-pf-edit-password" class="fa-solid fa-eye" style="font-size:11px;"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- AI Feature settings -->
+    <div style="font-size:10.5px;color:var(--text3);font-weight:700;text-transform:uppercase;margin:15px 0 9px"><i class="ti ti-robot"></i> AI Features Settings</div>
+    <div class="fg2" style="gap:10px; margin-bottom: 14px;">
+      <div class="fg">
+        <label>AI API Provider</label>
+        <select id="pf-edit-ai-provider">
+          <option value="Claude">Claude (Anthropic)</option>
+          <option value="OpenAI">OpenAI (ChatGPT)</option>
+          <option value="Gemini">Gemini (Google)</option>
+          <option value="Ollama">Ollama (Local AI)</option>
+        </select>
+      </div>
+      <div class="fg">
+        <label>AI API Key</label>
+        <div class="password-input-wrap">
+          <input type="password" id="pf-edit-ai-key" placeholder="Enter API Key">
+          <button type="button" class="password-toggle-btn" onclick="togglePasswordVisibility('pf-edit-ai-key')">
+            <i id="toggle-icon-pf-edit-ai-key" class="fa-solid fa-eye" style="font-size:11px;"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+
     <div style="font-size:10.5px;color:var(--text3);font-weight:700;text-transform:uppercase;margin-bottom:9px"><i class="ti ti-palette"></i> Choose a Theme</div>
     <div id="profile-theme-grid" style="display:grid;grid-template-columns:repeat(5,1fr);gap:10px 8px"></div>
     <div style="font-size:10.5px;color:var(--text3);margin-top:12px">Your theme choice is saved to your profile and applied automatically whenever you're active.</div>
   </div>
   <div class="modal-ft">
-    <button class="btn btn-secondary" onclick="closeModal('modalProfile')">Close</button>
+    <button class="btn btn-secondary" onclick="closeModal('modalProfile')">Cancel</button>
+    <button class="btn btn-primary" onclick="saveMyProfile()"><i class="ti ti-check"></i> Save Changes</button>
   </div>
 </div>
 </div>
@@ -691,6 +1034,7 @@ textarea{resize:vertical;min-height:70px}
       <select id="user-switcher" onchange="switchUser(this.value)" style="font-size:11.5px;padding:4px 8px;border:1px solid var(--border2);border-radius:6px;background:var(--bg2);max-width:150px"></select>
     </div>
     <button class="icon-btn icon-btn-edit" onclick="openProfile()" title="My Profile & Theme"><i class="ti ti-user"></i></button>
+    <button class="icon-btn icon-btn-delete" onclick="logout()" title="Sign Out / Logout"><i class="ti ti-x"></i></button>
     <button class="icon-btn icon-btn-edit" onclick="openGlobalSearch()" title="Search (Ctrl/Cmd+K)"><i class="ti ti-search"></i></button>
     <button class="icon-btn icon-btn-edit" onclick="openModal('modalShortcuts')" title="Keyboard shortcuts (?)"><i class="ti ti-keyboard"></i></button>
     <div style="position:relative">
@@ -1020,6 +1364,19 @@ textarea{resize:vertical;min-height:70px}
   </div>
 </div>
 
+<!-- ═══════════ PERMISSION DENIED ═══════════ -->
+<div class="section" id="section-permission-denied">
+  <div class="state-container state-denied" style="max-width: 580px; margin: 60px auto;">
+    <div class="state-icon" style="background: var(--rb);"><i class="ti ti-alert-triangle" style="color: var(--red);"></i></div>
+    <h2 class="state-title" style="font-size: 16px; margin-bottom: 8px;">Permission Denied</h2>
+    <p class="state-desc" id="permission-denied-message" style="margin-bottom: 20px;"></p>
+    <div style="display:flex; gap:10px; justify-content:center;">
+      <button class="btn btn-secondary" onclick="goTo('dashboard')"><i class="ti ti-layout-dashboard"></i> Back to Dashboard</button>
+      <button class="btn btn-primary" onclick="openProfile()"><i class="ti ti-user"></i> Change Profile Settings</button>
+    </div>
+  </div>
+</div>
+
 <!-- ═══════════ PROJECTS (ADMIN) ═══════════ -->
 <div class="section" id="section-projects">
   <div class="ph">
@@ -1056,6 +1413,7 @@ textarea{resize:vertical;min-height:70px}
     <div class="tab active" id="atab-activity" onclick="switchAdminTab('activity')">System Activity</div>
     <div class="tab" id="atab-templates" onclick="switchAdminTab('templates')">Test Case Templates</div>
     <div class="tab" id="atab-backup" onclick="switchAdminTab('backup')">Backup & Restore</div>
+    <div class="tab" id="atab-settings" onclick="switchAdminTab('settings')">System Settings</div>
   </div>
   <div id="admin-tab-activity">
     <div class="card"><div class="ct">Recent System Activity</div><div id="admin-activity-feed"></div></div>
@@ -1082,6 +1440,120 @@ textarea{resize:vertical;min-height:70px}
         </label>
       </div>
       <div style="font-size:10.5px;color:var(--text3);margin-top:10px" id="admin-last-saved"></div>
+    </div>
+  </div>
+
+  <div id="admin-tab-settings" style="display:none">
+    <div style="display:grid; grid-template-columns: 1fr 1fr; gap: 14px;">
+      <!-- Authentication -->
+      <div class="card">
+        <div class="ct">Authentication & SSO Options</div>
+        <div class="fg" style="margin-bottom:12px; display:flex; align-items:center; gap:8px;">
+          <input type="checkbox" id="sys-sso-enabled" style="width:16px; height:16px; margin:0; cursor:pointer;" onchange="updateSystemSetting('ssoEnabled', this.checked)">
+          <label style="cursor:pointer; font-weight:600;">Enable Microsoft SSO Login</label>
+        </div>
+        <p style="font-size:11px; color:var(--text3); margin-bottom:12px; margin-left:24px;">When checked, the "Sign in with Microsoft SSO" option will be visible on the main login screen.</p>
+
+        <div class="fg" style="display:flex; align-items:center; gap:8px;">
+          <input type="checkbox" id="sys-standard-enabled" style="width:16px; height:16px; margin:0; cursor:pointer;" onchange="updateSystemSetting('standardEnabled', this.checked)">
+          <label style="cursor:pointer; font-weight:600;">Enable Standard Username / Password Login</label>
+        </div>
+        <p style="font-size:11px; color:var(--text3); margin-left:24px;">Allows users to authenticate with conventional usernames or email addresses.</p>
+      </div>
+
+      <!-- AI Config -->
+      <div class="card">
+        <div class="ct">Global AI API Configurations</div>
+        <div class="fg2" style="gap:10px;">
+          <div class="fg">
+            <label>Global AI Provider</label>
+            <select id="sys-ai-provider" onchange="updateSystemSetting('globalAiProvider', this.value)">
+              <option value="Claude">Claude (Anthropic)</option>
+              <option value="OpenAI">OpenAI (ChatGPT)</option>
+              <option value="Gemini">Gemini (Google)</option>
+              <option value="Ollama">Ollama (Local AI)</option>
+            </select>
+          </div>
+          <div class="fg">
+            <label>Global AI API Key</label>
+            <div class="password-input-wrap">
+              <input type="password" id="sys-ai-key" placeholder="Enter Global API Key" onchange="updateSystemSetting('globalAiApiKey', this.value)">
+              <button type="button" class="password-toggle-btn" onclick="togglePasswordVisibility('sys-ai-key')">
+                <i id="toggle-icon-sys-ai-key" class="fa-solid fa-eye" style="font-size:11px;"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+        <p style="font-size:11.5px; color:var(--text2); margin-top:12px;">These credentials will act as the global program-level AI fallback if an individual engineer has not configured their own AI API Key in their profile.</p>
+      </div>
+
+      <!-- Bug SLAs -->
+      <div class="card">
+        <div class="ct">Bug Severity SLAs (Days)</div>
+        <div class="fg2" style="gap:10px;">
+          <div class="fg">
+            <label>Critical SLA (Days)</label>
+            <input type="number" id="sys-sla-critical" min="1" onchange="updateSystemSetting('criticalSla', parseInt(this.value))">
+          </div>
+          <div class="fg">
+            <label>High SLA (Days)</label>
+            <input type="number" id="sys-sla-high" min="1" onchange="updateSystemSetting('highSla', parseInt(this.value))">
+          </div>
+          <div class="fg">
+            <label>Medium SLA (Days)</label>
+            <input type="number" id="sys-sla-medium" min="1" onchange="updateSystemSetting('mediumSla', parseInt(this.value))">
+          </div>
+          <div class="fg">
+            <label>Low SLA (Days)</label>
+            <input type="number" id="sys-sla-low" min="1" onchange="updateSystemSetting('lowSla', parseInt(this.value))">
+          </div>
+        </div>
+      </div>
+
+      <!-- Environment & Network Simulation -->
+      <div class="card">
+        <div class="ct">Environment / Simulation Controls</div>
+        <div class="fg" style="margin-bottom:12px;">
+          <label style="font-weight:600;">Network Condition Simulation</label>
+          <select id="sys-network-sim" onchange="handleNetworkSimChange(this.value)">
+            <option value="normal">Normal (Stable Connection)</option>
+            <option value="slow">Slow Network Simulator (Adds network alerts & timeouts)</option>
+            <option value="offline">No Internet / Offline Mode Simulator (Blocks saving/remote AI)</option>
+          </select>
+        </div>
+        <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:14px;">
+          <button class="btn btn-danger" style="flex:1;" onclick="simulateSessionExpiry()"><i class="ti ti-alert-triangle"></i> Simulate Session Expiration</button>
+          <button class="btn btn-secondary" style="flex:1;" onclick="resetToDemo()"><i class="ti ti-refresh"></i> Reset Entire Demo State</button>
+        </div>
+      </div>
+
+      <!-- Go/No-Go weights -->
+      <div class="card" style="grid-column: 1 / -1;">
+        <div class="ct">Go/No-Go Release Gate Parameters (%)</div>
+        <div style="display:grid; grid-template-columns: repeat(5, 1fr); gap:12px;">
+          <div class="fg">
+            <label>Execution weight</label>
+            <input type="number" id="sys-w-exec" min="0" max="100" onchange="updateSystemWeight('execution', parseInt(this.value))">
+          </div>
+          <div class="fg">
+            <label>Pass Rate weight</label>
+            <input type="number" id="sys-w-pass" min="0" max="100" onchange="updateSystemWeight('passRate', parseInt(this.value))">
+          </div>
+          <div class="fg">
+            <label>Bugs weight</label>
+            <input type="number" id="sys-w-bugs" min="0" max="100" onchange="updateSystemWeight('bugs', parseInt(this.value))">
+          </div>
+          <div class="fg">
+            <label>Critical Modules weight</label>
+            <input type="number" id="sys-w-crit" min="0" max="100" onchange="updateSystemWeight('criticalModules', parseInt(this.value))">
+          </div>
+          <div class="fg">
+            <label>Readiness weight</label>
+            <input type="number" id="sys-w-readiness" min="0" max="100" onchange="updateSystemWeight('readiness', parseInt(this.value))">
+          </div>
+        </div>
+        <div id="sys-weights-total" style="font-size:11.5px; font-weight:700; margin-top:10px; text-align:right;">Total: 100%</div>
+      </div>
     </div>
   </div>
 </div>
@@ -1172,16 +1644,35 @@ let TASKS=[
   {id:"task3",title:"CTI smoke test execution",assignee:"Akshitij",planId:"tp2",moduleId:"m8",priority:"High",due:"2026-05-15",status:"In Progress",notes:"Test screen pop with live call simulation",createdAt:"2026-05-12"},
 ];
 
+let SYSTEM_SETTINGS = {
+  ssoEnabled: true,
+  standardEnabled: true,
+  globalAiProvider: "Claude",
+  globalAiApiKey: "",
+  criticalSla: 2,
+  highSla: 5,
+  mediumSla: 10,
+  lowSla: 20,
+  networkSimulation: "normal", // normal, slow, offline
+  goNoGoWeights: {
+    execution: 25,
+    passRate: 25,
+    bugs: 20,
+    criticalModules: 15,
+    readiness: 15
+  }
+};
+
 let USERS=[
-  {id:"u1",name:"Ashutosh", email:"ashutosh@company.com", role:"Admin",             status:"Active",assignedProjects:[],theme:"emerald"},
-  {id:"u2",name:"Vikram",   email:"vikram@company.com",   role:"Portfolio Manager",status:"Active",assignedProjects:[],theme:"ocean"},
-  {id:"u3",name:"Akrati",   email:"akrati@company.com",   role:"QA Manager",       status:"Active",assignedProjects:["CRM Phase 1","CRM Phase 2"],theme:"emerald"},
-  {id:"u4",name:"Akshitij", email:"akshitij@company.com", role:"Dev Manager",      status:"Active",assignedProjects:["CRM Phase 1","Integrations"],theme:"slate"},
-  {id:"u5",name:"Radhika",  email:"radhika@company.com",  role:"QA Manager",       status:"Active",assignedProjects:["Analytics"],theme:"royal"},
-  {id:"u6",name:"Gaurav",   email:"gaurav@company.com",   role:"QA Engineer",      status:"Active",assignedProjects:["CRM Phase 2"],theme:"emerald"},
-  {id:"u7",name:"Priya",    email:"priya@company.com",    role:"QA Engineer",      status:"Active",assignedProjects:["CRM Phase 1"],theme:"rose"},
-  {id:"u8",name:"Rohit",    email:"rohit@company.com",    role:"Dev Engineer",     status:"Active",assignedProjects:["CRM Phase 1"],theme:"emerald"},
-  {id:"u9",name:"Sneha",    email:"sneha@company.com",    role:"Dev Engineer",     status:"Active",assignedProjects:["CRM Phase 1"],theme:"emerald"},
+  {id:"u1",name:"Ashutosh", email:"ashutosh@company.com", role:"Admin",             status:"Active",assignedProjects:[],theme:"emerald",password:"password",username:"ashutosh",aiProvider:"Claude",aiApiKey:""},
+  {id:"u2",name:"Vikram",   email:"vikram@company.com",   role:"Portfolio Manager",status:"Active",assignedProjects:[],theme:"ocean",password:"password",username:"vikram",aiProvider:"Claude",aiApiKey:""},
+  {id:"u3",name:"Akrati",   email:"akrati@company.com",   role:"QA Manager",       status:"Active",assignedProjects:["CRM Phase 1","CRM Phase 2"],theme:"emerald",password:"password",username:"akrati",aiProvider:"Claude",aiApiKey:""},
+  {id:"u4",name:"Akshitij", email:"akshitij@company.com", role:"Dev Manager",      status:"Active",assignedProjects:["CRM Phase 1","Integrations"],theme:"slate",password:"password",username:"akshitij",aiProvider:"Claude",aiApiKey:""},
+  {id:"u5",name:"Radhika",  email:"radhika@company.com",  role:"QA Manager",       status:"Active",assignedProjects:["Analytics"],theme:"royal",password:"password",username:"radhika",aiProvider:"Claude",aiApiKey:""},
+  {id:"u6",name:"Gaurav",   email:"gaurav@company.com",   role:"QA Engineer",      status:"Active",assignedProjects:["CRM Phase 2"],theme:"emerald",password:"password",username:"gaurav",aiProvider:"Claude",aiApiKey:""},
+  {id:"u7",name:"Priya",    email:"priya@company.com",    role:"QA Engineer",      status:"Active",assignedProjects:["CRM Phase 1"],theme:"rose",password:"password",username:"priya",aiProvider:"Claude",aiApiKey:""},
+  {id:"u8",name:"Rohit",    email:"rohit@company.com",    role:"Dev Engineer",     status:"Active",assignedProjects:["CRM Phase 1"],theme:"emerald",password:"password",username:"rohit",aiProvider:"Claude",aiApiKey:""},
+  {id:"u9",name:"Sneha",    email:"sneha@company.com",    role:"Dev Engineer",     status:"Active",assignedProjects:["CRM Phase 1"],theme:"emerald",password:"password",username:"sneha",aiProvider:"Claude",aiApiKey:""},
 ];
 
 let PROJECTS=[
@@ -1243,10 +1734,30 @@ function toast(msg,type="ok"){
   setTimeout(()=>el.classList.remove("show"),3200);
 }
 function fetchWithTimeout(url,opts,timeoutMs=25000){
-  return Promise.race([
-    fetch(url,opts),
-    new Promise((_,reject)=>setTimeout(()=>reject(new Error("Request timed out — the network may be slow. Please try again.")),timeoutMs))
-  ]);
+  if (SYSTEM_SETTINGS && SYSTEM_SETTINGS.networkSimulation === "offline") {
+    return Promise.reject(new Error("Network connection lost. Please check your internet or disable offline simulation."));
+  }
+  if (!navigator.onLine) {
+    return Promise.reject(new Error("No Internet connection. Please connect to the internet and try again."));
+  }
+
+  const actualFetch = () => {
+    return Promise.race([
+      fetch(url,opts),
+      new Promise((_,reject)=>setTimeout(()=>reject(new Error("Request timed out — the network may be slow. Please try again.")),timeoutMs))
+    ]);
+  };
+
+  if (SYSTEM_SETTINGS && SYSTEM_SETTINGS.networkSimulation === "slow") {
+    // Add simulated 5-second latency delay
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        actualFetch().then(resolve).catch(reject);
+      }, 5000);
+    });
+  }
+
+  return actualFetch();
 }
 function ensureOfflineBanner(){
   let banner=$("offline-banner");
@@ -1282,7 +1793,219 @@ function clearFieldError(inputId){
   el.style.borderColor="";
   const errEl=document.getElementById(inputId+"-error");
   if(errEl)errEl.remove();
+  const succEl=document.getElementById(inputId+"-success");
+  if(succEl)succEl.remove();
+  el.classList.remove("input-success");
 }
+
+/* ══ LOGIN, SSO & SESSION MANAGEMENT JS ══ */
+function checkLoginSession(){
+  const loggedIn = sessionStorage.getItem("isLoggedIn") === "true";
+  const loginCont = $("login-container");
+
+  // Apply SSO toggle status from system settings
+  const ssoSec = $("sso-section");
+  if (ssoSec) {
+    ssoSec.style.display = SYSTEM_SETTINGS.ssoEnabled ? "" : "none";
+  }
+
+  if (!loggedIn) {
+    if (loginCont) loginCont.style.display = "flex";
+    document.querySelectorAll(".topbar, .layout").forEach(el => el.style.display = "none");
+  } else {
+    if (loginCont) loginCont.style.display = "none";
+    document.querySelectorAll(".topbar, .layout").forEach(el => el.style.display = "");
+    ensureValidSession();
+  }
+}
+
+function togglePasswordVisibility(inputId) {
+  const el = $(inputId);
+  if (!el) return;
+  const icon = $("toggle-icon-" + inputId) || $("eye-icon-" + inputId);
+  if (el.type === "password") {
+    el.type = "text";
+    if (icon) {
+      icon.className = "fa-solid fa-eye-slash";
+    }
+  } else {
+    el.type = "password";
+    if (icon) {
+      icon.className = "fa-solid fa-eye";
+    }
+  }
+}
+
+function handleSSOLogin() {
+  if (!SYSTEM_SETTINGS.ssoEnabled) {
+    toast("SSO Login is disabled by Administrator","err");
+    return;
+  }
+
+  const alertEl = $("login-alert");
+  if (alertEl) {
+    alertEl.style.display = "block";
+    alertEl.className = "b-gray";
+    alertEl.innerHTML = `<span class="spinner"></span> Initiating Microsoft SSO...`;
+  }
+
+  // Simulate active directory / MSAL popup flow
+  setTimeout(() => {
+    // Authenticate as Vikram (u2) as a default SSO sample
+    const ssoUser = USERS.find(u => u.id === "u2") || USERS[0];
+    if (ssoUser) {
+      currentUserId = ssoUser.id;
+      sessionStorage.setItem("isLoggedIn", "true");
+      sessionStorage.setItem("currentUserId", ssoUser.id);
+
+      if (alertEl) {
+        alertEl.style.display = "block";
+        alertEl.className = "b-green";
+        alertEl.innerHTML = `<i class="ti ti-check"></i> SSO Authentication Successful! Redirecting...`;
+      }
+
+      setTimeout(() => {
+        if (alertEl) alertEl.style.display = "none";
+        checkLoginSession();
+        applyTheme(currentUser().theme || "emerald");
+        renderUserSwitcher();
+        renderSidebarVisibility();
+        renderAll();
+        toast(`Welcome back, ${ssoUser.name}! Signed in via SSO.`, "ok");
+        saveState();
+      }, 1000);
+    }
+  }, 1200);
+}
+
+function handleStandardLogin(event) {
+  if (event) event.preventDefault();
+
+  const usernameInput = $("login-username");
+  const passwordInput = $("login-password");
+  const alertEl = $("login-alert");
+
+  const username = (usernameInput.value || "").trim().toLowerCase();
+  const password = passwordInput.value || "";
+
+  // Clean previous states
+  clearFieldError("login-username");
+  clearFieldError("login-password");
+
+  let valid = true;
+
+  if (!username) {
+    fieldError("login-username", "Username or Email is required");
+    valid = false;
+  } else if (username.length < 3) {
+    fieldError("login-username", "Username or Email must be at least 3 characters");
+    valid = false;
+  }
+
+  if (!password) {
+    fieldError("login-password", "Password is required");
+    valid = false;
+  } else if (password.length < 4) {
+    fieldError("login-password", "Password must be at least 4 characters");
+    valid = false;
+  }
+
+  if (!valid) {
+    if (alertEl) {
+      alertEl.style.display = "block";
+      alertEl.className = "b-red";
+      alertEl.innerHTML = `Please correct the form errors below.`;
+    }
+    return;
+  }
+
+  // Look for matching user
+  const user = USERS.find(u =>
+    (u.email.toLowerCase() === username || u.username?.toLowerCase() === username) &&
+    u.password === password
+  );
+
+  if (!user) {
+    if (alertEl) {
+      alertEl.style.display = "block";
+      alertEl.className = "b-red";
+      alertEl.innerHTML = `Invalid username or password. Try again or check credentials.`;
+    }
+    fieldError("login-username", "Could not verify credentials");
+    fieldError("login-password", "Could not verify credentials");
+    return;
+  }
+
+  // Success state highlight
+  usernameInput.classList.add("input-success");
+  passwordInput.classList.add("input-success");
+
+  let succEl = document.getElementById("login-username-success");
+  if (!succEl) {
+    succEl = document.createElement("div");
+    succEl.id = "login-username-success";
+    succEl.className = "validation-success-text";
+    succEl.innerHTML = `<i class="ti ti-check"></i> Field verified successfully`;
+    usernameInput.parentElement.appendChild(succEl);
+  }
+
+  if (alertEl) {
+    alertEl.style.display = "block";
+    alertEl.className = "b-green";
+    alertEl.innerHTML = `<i class="ti ti-check"></i> Login Successful! Redirecting...`;
+  }
+
+  setTimeout(() => {
+    currentUserId = user.id;
+    sessionStorage.setItem("isLoggedIn", "true");
+    sessionStorage.setItem("currentUserId", user.id);
+    if (alertEl) alertEl.style.display = "none";
+    clearFieldError("login-username");
+    clearFieldError("login-password");
+
+    checkLoginSession();
+    applyTheme(currentUser().theme || "emerald");
+    renderUserSwitcher();
+    renderSidebarVisibility();
+    renderAll();
+    toast(`Welcome back, ${user.name}!`, "ok");
+    saveState();
+  }, 1000);
+}
+
+function handleSessionReauth(event) {
+  if (event) event.preventDefault();
+  const passwordInput = $("reauth-password");
+  const password = passwordInput.value || "";
+  const u = currentUser();
+
+  if (u && u.password === password) {
+    sessionStorage.setItem("isLoggedIn", "true");
+    $("session-expired-overlay").style.display = "none";
+    passwordInput.value = "";
+    toast("Session restored successfully", "ok");
+    checkLoginSession();
+  } else {
+    toast("Incorrect password", "err");
+  }
+}
+
+function logout() {
+  sessionStorage.removeItem("isLoggedIn");
+  sessionStorage.removeItem("currentUserId");
+  toast("You have logged out", "info");
+  checkLoginSession();
+}
+
+function simulateSessionExpiry() {
+  sessionStorage.removeItem("isLoggedIn");
+  const u = currentUser();
+  const label = $("reauth-username-label");
+  if (label && u) label.textContent = `${u.name} (${u.role})`;
+  $("session-expired-overlay").style.display = "flex";
+  toast("Session expired (Simulated)", "err");
+}
+
 function ensureValidSession(){
   if(!USERS.find(u=>u.id===currentUserId)){
     currentUserId=USERS[0]?USERS[0].id:currentUserId;
@@ -1303,11 +2026,66 @@ function uid(){return"id"+Date.now()+Math.floor(Math.random()*9999);}
 function parseDate(s){if(!s||s==="TBD")return null;const p=s.split("-");if(p.length!==3)return null;const mo=MON[p[1]];if(mo===undefined)return null;return new Date(2000+parseInt(p[2]>100?p[2]-2000:p[2]),mo,parseInt(p[0]));}
 function daysTo(dateStr){const d=parseDate(dateStr);return d?Math.ceil((d-new Date())/86400000):999;}
 
+/* ═══════════════════════ PREMIUM UI STATES GENERATORS ═══════════════════════ */
+function getEmptyStateHtml(title, desc, actionText, actionOnClick) {
+  const actionButton = (actionText && actionOnClick) ? `<button class="btn btn-primary btn-sm" onclick="${actionOnClick}" style="margin-top:10px;"><i class="ti ti-plus"></i> ${actionText}</button>` : "";
+  return `
+    <tr><td colspan="20" style="padding:0; border:none; background:transparent;">
+      <div class="state-container state-empty">
+        <div class="state-icon"><i class="ti ti-clipboard-list"></i></div>
+        <h3 class="state-title">${title}</h3>
+        <p class="state-desc">${desc}</p>
+        ${actionButton}
+      </div>
+    </td></tr>
+  `;
+}
+
+function getNoSearchResultsHtml(query, clearActionStr) {
+  const resetBtn = clearActionStr ? `<button class="btn btn-secondary btn-sm" onclick="${clearActionStr}" style="margin-top:10px;"><i class="ti ti-x"></i> Clear Search Filters</button>` : "";
+  return `
+    <tr><td colspan="20" style="padding:0; border:none; background:transparent;">
+      <div class="state-container state-no-results">
+        <div class="state-icon" style="background:var(--ab);"><i class="ti ti-search" style="color:var(--amber);"></i></div>
+        <h3 class="state-title">No Search Results</h3>
+        <p class="state-desc">Your search or filter criteria did not match any records. Check spelling or try a different filter.</p>
+        ${resetBtn}
+      </div>
+    </td></tr>
+  `;
+}
+
+function getLoadingStateHtml(message) {
+  return `
+    <tr><td colspan="20" style="padding:0; border:none; background:transparent;">
+      <div class="state-container state-loading">
+        <div class="state-icon"><div class="state-icon-spinner"></div></div>
+        <h3 class="state-title">Loading Information</h3>
+        <p class="state-desc">${message || "Fetching live data feeds and compiling statistics..."}</p>
+      </div>
+    </td></tr>
+  `;
+}
+
+function getErrorStateHtml(title, desc, retryActionStr) {
+  const retryBtn = retryActionStr ? `<button class="btn btn-danger btn-sm" onclick="${retryActionStr}" style="margin-top:10px;"><i class="ti ti-refresh"></i> Retry Request</button>` : "";
+  return `
+    <tr><td colspan="20" style="padding:0; border:none; background:transparent;">
+      <div class="state-container state-error">
+        <div class="state-icon" style="background:var(--rb);"><i class="ti ti-alert-triangle" style="color:var(--red);"></i></div>
+        <h3 class="state-title" style="color:var(--rt);">${title}</h3>
+        <p class="state-desc">${desc}</p>
+        ${retryBtn}
+      </div>
+    </td></tr>
+  `;
+}
+
 // ═══════════════════════ PERSISTENT STORAGE ═══════════════════════
 async function saveState(){
   if(!window.storage)return;
   try{
-    const state={MODULES,TEST_CASES,TEST_PLANS,TASKS,USERS,PROJECTS,DEFECTS,REQUIREMENTS,TEMPLATES,HISTORY,currentUserId,currentProject};
+    const state={MODULES,TEST_CASES,TEST_PLANS,TASKS,USERS,PROJECTS,DEFECTS,REQUIREMENTS,TEMPLATES,HISTORY,currentUserId,currentProject,SYSTEM_SETTINGS};
     await window.storage.set(STORAGE_KEY,JSON.stringify(state),false);
   }catch(e){console.warn("Persistent save skipped (will retry on next change):",e&&e.message?e.message:e);}
 }
@@ -1329,6 +2107,7 @@ async function loadState(){
       if(s.HISTORY)HISTORY=s.HISTORY;
       if(s.currentUserId)currentUserId=s.currentUserId;
       if(s.currentProject)currentProject=s.currentProject;
+      if(s.SYSTEM_SETTINGS)SYSTEM_SETTINGS=s.SYSTEM_SETTINGS;
       return true;
     }
   }catch(e){ /* no saved state yet — use seed data */ }
@@ -1395,8 +2174,89 @@ function openProfile(){
   const rc=ROLE_COLORS[u.role]||{bg:"#eee",tc:"#555"};
   const initials=u.name.split(" ").map(w=>w[0]).join("").substring(0,2).toUpperCase();
   const av=$("profile-avatar");av.style.background=rc.tc;av.textContent=initials;
+
+  // Clean validation states
+  clearFieldError("pf-edit-name");
+  clearFieldError("pf-edit-email");
+  clearFieldError("pf-edit-username");
+  clearFieldError("pf-edit-password");
+
+  // Populate input fields
+  $("pf-edit-name").value = u.name || "";
+  $("pf-edit-email").value = u.email || "";
+  $("pf-edit-username").value = u.username || u.name.split(" ")[0].toLowerCase();
+  $("pf-edit-password").value = u.password || "password";
+  $("pf-edit-ai-provider").value = u.aiProvider || "Claude";
+  $("pf-edit-ai-key").value = u.aiApiKey || "";
+
   renderThemeGrid();
   openModal("modalProfile");
+}
+
+function saveMyProfile(){
+  const name = ($("pf-edit-name").value || "").trim();
+  const email = ($("pf-edit-email").value || "").trim();
+  const username = ($("pf-edit-username").value || "").trim().toLowerCase();
+  const password = $("pf-edit-password").value || "";
+  const aiProvider = $("pf-edit-ai-provider").value;
+  const aiApiKey = ($("pf-edit-ai-key").value || "").trim();
+
+  // Validate personal details
+  let valid = true;
+  if (!name) {
+    fieldError("pf-edit-name", "Full Name is required");
+    valid = false;
+  }
+  if (!email || !email.includes("@")) {
+    fieldError("pf-edit-email", "A valid email address is required");
+    valid = false;
+  }
+  if (!username || username.length < 3) {
+    fieldError("pf-edit-username", "Username must be at least 3 characters");
+    valid = false;
+  }
+  if (!password || password.length < 4) {
+    fieldError("pf-edit-password", "Password must be at least 4 characters");
+    valid = false;
+  }
+
+  if (!valid) {
+    toast("Please resolve form validation errors", "err");
+    return;
+  }
+
+  const u = currentUser();
+  const oldName = u.name;
+
+  u.name = name;
+  u.email = email;
+  u.username = username;
+  u.password = password;
+  u.aiProvider = aiProvider;
+  u.aiApiKey = aiApiKey;
+
+  // Propagate name change in references
+  if (oldName !== name) {
+    TEST_CASES.forEach(t => { if (t.assignee === oldName) t.assignee = name; });
+    TASKS.forEach(t => { if (t.assignee === oldName) t.assignee = name; });
+    TEST_PLANS.forEach(p => { if (p.owner === oldName) p.owner = name; });
+    PROJECTS.forEach(p => { if (p.owner === oldName) p.owner = name; });
+  }
+
+  // Highlight inputs with success states
+  $("pf-edit-name").classList.add("input-success");
+  $("pf-edit-email").classList.add("input-success");
+  $("pf-edit-username").classList.add("input-success");
+  $("pf-edit-password").classList.add("input-success");
+
+  toast("Profile and AI configurations updated successfully", "ok");
+
+  setTimeout(() => {
+    closeModal("modalProfile");
+    saveState();
+    renderUserSwitcher();
+    renderAll();
+  }, 800);
 }
 function renderThemeGrid(){
   const grid=$("profile-theme-grid");if(!grid)return;
@@ -1773,12 +2633,13 @@ function captureHistorySnapshot(){
 }
 
 function goNoGoScore(s){
+  const w = SYSTEM_SETTINGS.goNoGoWeights || {execution: 25, passRate: 25, bugs: 20, criticalModules: 15, readiness: 15};
   const gates=[
-    {name:"Execution ≥ 90%",weight:25,val:s.execPct,threshold:90},
-    {name:"Pass Rate ≥ 85%",weight:25,val:s.passPct,threshold:85},
-    {name:"Low/Zero Bugs",weight:20,val:s.bugs===0?100:Math.max(0,100-s.bugs*5),threshold:80},
-    {name:"No Critical Modules",weight:15,val:s.crit===0?100:Math.max(0,100-s.crit*30),threshold:100},
-    {name:"Readiness ≥ 80%",weight:15,val:s.readiness,threshold:80},
+    {name:"Execution ≥ 90%",weight:w.execution,val:s.execPct,threshold:90},
+    {name:"Pass Rate ≥ 85%",weight:w.passRate,val:s.passPct,threshold:85},
+    {name:"Low/Zero Bugs",weight:w.bugs,val:s.bugs===0?100:Math.max(0,100-s.bugs*5),threshold:80},
+    {name:"No Critical Modules",weight:w.criticalModules,val:s.crit===0?100:Math.max(0,100-s.crit*30),threshold:100},
+    {name:"Readiness ≥ 80%",weight:w.readiness,val:s.readiness,threshold:80},
   ];
   const score=Math.round(gates.reduce((a,g)=>a+g.val*g.weight/100,0));
   return{score,gates,verdict:score>=75?"GO ✓":score>=55?"CONDITIONAL":"NO-GO ✗",color:score>=75?"#0d6e50":score>=55?"#854F0B":"#a32d2d"};
@@ -2047,7 +2908,22 @@ function updateTopStats(s){
 
 // ═══════════════════════ NAVIGATION ═══════════════════════
 function goTo(id){
-  if((id==="projects"||id==="users"||id==="adminbackend")&&!hasAdminAccess()){toast("Admin or Portfolio Manager access required","err");return;}
+  const restricted = (id==="projects"||id==="users"||id==="adminbackend");
+  if(restricted && !hasAdminAccess()){
+    const msg = `You are currently logged in as <strong>${currentUser().name}</strong> (${currentUser().role}). This page is restricted to Admin or Portfolio Manager roles only.`;
+    const msgEl = $("permission-denied-message");
+    if (msgEl) msgEl.innerHTML = msg;
+
+    document.querySelectorAll(".section").forEach(s=>s.classList.remove("active"));
+    document.querySelectorAll(".nav").forEach(n=>n.classList.remove("active"));
+    const sec=$("section-permission-denied");
+    if(sec) sec.classList.add("active");
+    const nav=$("nav-"+id);
+    if(nav) nav.classList.add("active");
+    if (window.innerWidth<=900) toggleSidebar(false);
+    return;
+  }
+
   document.querySelectorAll(".section").forEach(s=>s.classList.remove("active"));
   document.querySelectorAll(".nav").forEach(n=>n.classList.remove("active"));
   const sec=$("section-"+id),nav=$("nav-"+id);
@@ -2202,7 +3078,7 @@ function renderTCTable(){
         <button class="icon-btn icon-btn-delete" onclick="deleteTC('${t.id}')" title="Delete"><i class="ti ti-trash"></i></button>
       </div></td>
     </tr>`;
-  }).join("")||`<tr><td colspan="10" style="text-align:center;padding:24px;color:var(--text3)">No test cases found. <a href="#" onclick="openAddTC(-1)" style="color:var(--green)">Add one</a>, <a href="#" onclick="openImportTC()" style="color:var(--green)">import a file</a>, or use AI to generate.</td></tr>`;
+  }).join("")||(srch ? getNoSearchResultsHtml(srch, "$('tc-search').value=''; renderTCTable();") : getEmptyStateHtml("No Test Cases Found", "Create your first test scenario manually, start from a template, or generate test cases using our premium AI generator.", "Add Test Case", "openAddTC(-1)"));
   renderTCBulkBar();
 }
 function toggleTCSelect(id,checked){checked?selectedTCIds.add(id):selectedTCIds.delete(id);renderTCBulkBar();}
@@ -2468,7 +3344,7 @@ function renderExecTable(){
       <td style="font-size:11px;color:var(--rt)">${t.defect||"–"}</td>
       <td><button class="icon-btn icon-btn-play" onclick="openExecModal('${t.id}')" title="Log Execution"><i class="ti ti-edit"></i></button></td>
     </tr>`;
-  }).join("")||`<tr><td colspan="10" style="text-align:center;padding:24px;color:var(--text3)">No test cases match the filter.</td></tr>`;
+  }).join("")||getNoSearchResultsHtml("Current filter parameters", "$('exec-filter-plan').value=''; $('exec-filter-module').value=''; $('exec-filter-status').value=''; renderExecTable();");
 }
 
 function inlineExecUpdate(tcId,newStatus){
@@ -2710,7 +3586,10 @@ function defectSlaStatus(d){
   if(d.status==="Closed"||d.status==="Fixed")return{days:null,label:"–",color:"#9096b3"};
   const created=new Date(d.createdAt);
   const days=Math.floor((new Date()-created)/86400000);
-  const target=DEFECT_SLA_DAYS[d.severity]||10;
+  const target = (d.severity === "Critical" ? SYSTEM_SETTINGS.criticalSla :
+                  d.severity === "High" ? SYSTEM_SETTINGS.highSla :
+                  d.severity === "Medium" ? SYSTEM_SETTINGS.mediumSla :
+                  SYSTEM_SETTINGS.lowSla) || 10;
   let color="#0d6e50",label=`${days}d`;
   if(days>target){color="#a32d2d";label=`${days}d ⚠ SLA breached`;}
   else if(days>target*0.7){color="#854F0B";label=`${days}d — near SLA`;}
@@ -2760,7 +3639,7 @@ function renderDefectsTable(){
         <button class="icon-btn icon-btn-delete" onclick="deleteDefect('${d.id}')" title="Delete"><i class="ti ti-trash"></i></button>
       </div></td>
     </tr>`;
-  }).join("")||`<tr><td colspan="10" style="text-align:center;padding:20px;color:var(--text3)">No defects logged.</td></tr>`;
+  }).join("")||(stF || sevF || priF ? getNoSearchResultsHtml("Current status/severity filter options", "$('defect-filter-status').value=''; $('defect-filter-severity').value=''; $('defect-filter-priority').value=''; renderDefectsTable();") : getEmptyStateHtml("No Defects Logged", "All modules are clean! When bug occurrences arise, log them here or directly from failed executions.", "Log Defect", "openAddDefect(-1)"));
 }
 function suggestDefectPriority(){
   const sev=$("df-severity").value;
@@ -2992,11 +3871,90 @@ function switchAdminTab(tab){
   $("atab-activity").classList.toggle("active",tab==="activity");
   $("atab-templates").classList.toggle("active",tab==="templates");
   $("atab-backup").classList.toggle("active",tab==="backup");
+  $("atab-settings").classList.toggle("active",tab==="settings");
   $("admin-tab-activity").style.display=tab==="activity"?"":"none";
   $("admin-tab-templates").style.display=tab==="templates"?"":"none";
   $("admin-tab-backup").style.display=tab==="backup"?"":"none";
+  $("admin-tab-settings").style.display=tab==="settings"?"":"none";
   if(tab==="templates")renderTemplatesTable();
   if(tab==="backup")renderBackupInfo();
+  if(tab==="settings")renderSystemSettings();
+}
+
+function renderSystemSettings() {
+  if (!SYSTEM_SETTINGS) return;
+  $("sys-sso-enabled").checked = !!SYSTEM_SETTINGS.ssoEnabled;
+  $("sys-standard-enabled").checked = !!SYSTEM_SETTINGS.standardEnabled;
+  $("sys-ai-provider").value = SYSTEM_SETTINGS.globalAiProvider || "Claude";
+  $("sys-ai-key").value = SYSTEM_SETTINGS.globalAiApiKey || "";
+
+  $("sys-sla-critical").value = SYSTEM_SETTINGS.criticalSla || 2;
+  $("sys-sla-high").value = SYSTEM_SETTINGS.highSla || 5;
+  $("sys-sla-medium").value = SYSTEM_SETTINGS.mediumSla || 10;
+  $("sys-sla-low").value = SYSTEM_SETTINGS.lowSla || 20;
+
+  $("sys-network-sim").value = SYSTEM_SETTINGS.networkSimulation || "normal";
+
+  const w = SYSTEM_SETTINGS.goNoGoWeights || {execution: 25, passRate: 25, bugs: 20, criticalModules: 15, readiness: 15};
+  $("sys-w-exec").value = w.execution;
+  $("sys-w-pass").value = w.passRate;
+  $("sys-w-bugs").value = w.bugs;
+  $("sys-w-crit").value = w.criticalModules;
+  $("sys-w-readiness").value = w.readiness;
+
+  updateWeightsTotal();
+}
+
+function updateSystemSetting(key, val) {
+  if (!SYSTEM_SETTINGS) SYSTEM_SETTINGS = {};
+  SYSTEM_SETTINGS[key] = val;
+  saveState();
+  toast("System setting updated successfully", "ok");
+}
+
+function updateSystemWeight(key, val) {
+  if (!SYSTEM_SETTINGS.goNoGoWeights) SYSTEM_SETTINGS.goNoGoWeights = {};
+  SYSTEM_SETTINGS.goNoGoWeights[key] = val;
+  updateWeightsTotal();
+  saveState();
+}
+
+function updateWeightsTotal() {
+  const w = SYSTEM_SETTINGS.goNoGoWeights || {execution: 25, passRate: 25, bugs: 20, criticalModules: 15, readiness: 15};
+  const total = (w.execution || 0) + (w.passRate || 0) + (w.bugs || 0) + (w.criticalModules || 0) + (w.readiness || 0);
+  const el = $("sys-weights-total");
+  if (el) {
+    el.textContent = `Total: ${total}%`;
+    if (total !== 100) {
+      el.style.color = "var(--red)";
+      el.textContent += ` (Must equal 100%)`;
+    } else {
+      el.style.color = "var(--green)";
+    }
+  }
+}
+
+function handleNetworkSimChange(val) {
+  SYSTEM_SETTINGS.networkSimulation = val;
+  saveState();
+
+  const indicator = $("network-indicator");
+  if (!indicator) return;
+
+  if (val === "offline") {
+    indicator.style.display = "flex";
+    indicator.className = "network-indicator-bar network-offline";
+    indicator.innerHTML = `<i class="ti ti-alert-triangle"></i> You are currently simulating OFFLINE MODE. No remote transactions or AI tasks will save or complete.`;
+    toast("Switched to simulated Offline mode", "err");
+  } else if (val === "slow") {
+    indicator.style.display = "flex";
+    indicator.className = "network-indicator-bar network-slow";
+    indicator.innerHTML = `<i class="ti ti-clock"></i> Slow Connection Simulated. Requests will be delayed by up to 25 seconds.`;
+    toast("Slow connection simulated", "amber");
+  } else {
+    indicator.style.display = "none";
+    toast("Network restored to normal", "ok");
+  }
 }
 function getSystemActivityFeed(){
   const feed=[];
@@ -3032,6 +3990,7 @@ function renderAdminBackend(){
   renderAdminActivityFeed();
   if(adminActiveTab==="templates")renderTemplatesTable();
   if(adminActiveTab==="backup")renderBackupInfo();
+  if(adminActiveTab==="settings")renderSystemSettings();
 }
 
 // ═══════════════════════ ACTIVITY LOG ═══════════════════════
@@ -3322,7 +4281,7 @@ function renderProjects(){
         <button class="icon-btn icon-btn-delete" onclick="deleteProject('${p.id}')" title="Delete"><i class="ti ti-trash"></i></button>
       </div></td>
     </tr>`;
-  }).join("")||`<tr><td colspan="9" style="text-align:center;padding:24px;color:var(--text3)">No projects yet.</td></tr>`;
+  }).join("")||getEmptyStateHtml("No Projects Registered", "Create a new project environment to group modules and manage assignments.", "New Project", "openAddProject(-1)");
 }
 
 // ═══════════════════════ MODAL: USER ═══════════════════════
@@ -3345,8 +4304,12 @@ function saveUser(){
   if(USERS.some((u,i)=>u.name.toLowerCase()===name.toLowerCase()&&i!==editUserIdx)){toast("A user with this name already exists","err");return;}
   const oldName=editUserIdx!==-1?USERS[editUserIdx].name:null;
   const existingTheme=editUserIdx!==-1?(USERS[editUserIdx].theme||"emerald"):"emerald";
+  const existingPassword=editUserIdx!==-1?(USERS[editUserIdx].password||"password"):"password";
+  const existingUsername=editUserIdx!==-1?(USERS[editUserIdx].username||name.split(" ")[0].toLowerCase()):name.split(" ")[0].toLowerCase();
+  const existingAiProvider=editUserIdx!==-1?(USERS[editUserIdx].aiProvider||"Claude"):"Claude";
+  const existingAiApiKey=editUserIdx!==-1?(USERS[editUserIdx].aiApiKey||""):"";
   const assignedProjects=[...document.querySelectorAll('#us-projects-list input[type="checkbox"]:checked')].map(el=>el.value);
-  const u={id:editUserIdx===-1?uid():USERS[editUserIdx].id,name,email,role:$("us-role").value,status:$("us-status").value,assignedProjects,theme:existingTheme};
+  const u={id:editUserIdx===-1?uid():USERS[editUserIdx].id,name,email,role:$("us-role").value,status:$("us-status").value,assignedProjects,theme:existingTheme,password:existingPassword,username:existingUsername,aiProvider:existingAiProvider,aiApiKey:existingAiApiKey};
   if(editUserIdx===-1){USERS.push(u);toast(`User "${name}" created`,"ok");}
   else{
     USERS[editUserIdx]=u;
@@ -3402,7 +4365,7 @@ function renderUsers(){
         <button class="icon-btn icon-btn-delete" onclick="deleteUser('${u.id}')" title="Delete"><i class="ti ti-trash"></i></button>
       </div></td>
     </tr>`;
-  }).join("");
+  }).join("")||getEmptyStateHtml("No Program Users", "Register program managers, developers, and QA automation engineers.", "New User", "openAddUser(-1)");
 }
 
 // ═══════════════════════ EXPORT ═══════════════════════
@@ -3511,10 +4474,15 @@ document.addEventListener("keydown",e=>{
 // ═══════════════════════ INIT ═══════════════════════
 window.addEventListener("load",async ()=>{
   await loadState();
+  const sessionUser = sessionStorage.getItem("currentUserId");
+  if (sessionUser && USERS.find(u => u.id === sessionUser)) {
+    currentUserId = sessionUser;
+  }
   captureHistorySnapshot();
   applyTheme(currentUser().theme||"emerald");
   renderUserSwitcher();
   renderSidebarVisibility();
+  checkLoginSession();
   renderSection("dashboard");
   renderChips();
 });
